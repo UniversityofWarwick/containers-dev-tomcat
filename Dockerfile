@@ -1,4 +1,5 @@
-FROM tomcat:8.5
+ARG TOMCAT_VERSION
+FROM tomcat:${TOMCAT_VERSION}
 
 # Common baked jars
 COPY ./tomcat/lib/* /usr/local/tomcat/lib/

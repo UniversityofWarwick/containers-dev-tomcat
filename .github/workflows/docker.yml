@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - tomcat-9
+      - tomcat-10
 
 jobs:
   build:
