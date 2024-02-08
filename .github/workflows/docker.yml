@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - main
-      - tomcat-9
       - tomcat-10
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version:
+          - 9-jdk8
+          - 9-jdk17
 
     steps:
       - name: Checkout code
@@ -29,4 +34,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: universityofwarwick/dev-tomcat:8.5
+          build-args: |
+            TOMCAT_VERSION=${{ matrix.version }}
+          tags: universityofwarwick/dev-tomcat:${{ matrix.version }}
