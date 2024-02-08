@@ -1,13 +1,13 @@
-# Tomcat 8.5 for Developers
+# Tomcat 9 for Developers
 
-This is a modified `tomcat:8.5` image with some minor adjustments to make it easier to deploy a local application to.
+This is a modified Tomcat 9 image with some minor adjustments to make it easier to deploy a local application to.
 
 * Common jars are baked into lib
 * Easy to add more files (like configuration) to the classpath through a mount point
 
 ## Building
 
-`./build-image.sh` builds the image. It currently doesn't push it up anywhere.
+`./build-image.sh` builds the image. The GitHub workflow should handle pushing new versions up. There are a few alternative tags depending on what Java version is needed.
 
 The Tomcat version can be changed in the .env file, which will change both the base image and the tag for the produced image.
 
@@ -29,7 +29,7 @@ This should run a one-shot Tomcat that deploys your Gradle-built application (If
 docker run --rm --name tomcat --user $(id -u) --network host \
  -v ./build/libs:/usr/local/tomcat/webapps \
  -v ./config:/app/classpath \
- universityofwarwick/dev-tomcat
+ universityofwarwick/dev-tomcat:9-jdk17
 ```
 
 [rootless]: https://docs.docker.com/engine/security/rootless/#install
