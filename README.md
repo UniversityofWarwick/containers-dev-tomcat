@@ -3,6 +3,7 @@
 This is a modified Tomcat 9 image with some minor adjustments to make it easier to deploy a local application to.
 
 * Common jars are baked into lib
+* Enable JRebel and XRebel with a simple environment variable
 * Easy to add more files (like configuration) to the classpath through a mount point
 
 ## Building
@@ -31,5 +32,11 @@ docker run --rm --name tomcat --user $(id -u) --network host \
  -v ./config:/app/classpath \
  universityofwarwick/dev-tomcat:9-jdk17
 ```
+
+## Options
+
+* `-e ENABLE_JREBEL=1` - Enable JRebel agent.
+* `-e ENABLE_XREBEL=1` - Enable XRebel agent.
+* `-e DISABLE_DEBUG=1` - Disable debug port 8000
 
 [rootless]: https://docs.docker.com/engine/security/rootless/#install

@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - tomcat-10
+    paths-ignore:
+      - "*.md"
 
 jobs:
   build:
