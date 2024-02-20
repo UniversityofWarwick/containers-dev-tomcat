@@ -4,7 +4,7 @@ FROM tomcat:${TOMCAT_VERSION}
 # Common baked jars
 COPY ./tomcat/lib/* /usr/local/tomcat/lib/
 
-COPY tomcat/agent-libs /usr/local/tomcat/agent-libs
+COPY ./tomcat/agent-libs /usr/local/tomcat/agent-libs
 COPY ./start.sh /usr/local/tomcat/bin/
 
 CMD ["start.sh"]
