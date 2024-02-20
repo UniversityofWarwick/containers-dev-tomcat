@@ -1,4 +1,4 @@
-# Tomcat 9 for Developers
+# Tomcat 9 for Developers [![Build and Publish Docker Image](https://github.com/UniversityofWarwick/containers-dev-tomcat/actions/workflows/docker.yml/badge.svg)](https://github.com/UniversityofWarwick/containers-dev-tomcat/actions/workflows/docker.yml)
 
 This is a modified Tomcat 9 image with some minor adjustments to make it easier to deploy a local application to.
 
