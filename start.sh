@@ -2,6 +2,7 @@
 
 echo "🐅 Welcome to Tomcat, container of dreams"
 
+
 # Enable reading properties from env as well as sys props
 # https://tomcat.apache.org/tomcat-9.0-doc/config/systemprops.html#Property_replacements
 CATALINA_OPTS="$CATALINA_OPTS -Dorg.apache.tomcat.util.digester.PROPERTY_SOURCE=org.apache.tomcat.util.digester.EnvironmentPropertySource,org.apache.tomcat.util.digester.SystemPropertySource"
@@ -22,9 +23,17 @@ fi
 # -e ENABLE_XREBEL=1
 if [[ "$ENABLE_XREBEL" == "1" ]]; then
   echo "🐅 Enabling XRebel"
-  CATALINA_OPTS="$CATALINA_OPTS -javaagent:/usr/local/tomcat/agent-libs/xrebel.jar"
+  CATALINA_OPTS="$CATALINA_OPTS -javaagent:/usr/local/tomcat/agent-libs/xrebel.jar -Dxrebel.license.email=$XREBEL_EMAIL"
+  if [[ "$XREBEL_URL" != "" ]]; then
+    CATALINA_OPTS="$CATALINA_OPTS -Dxrebel.license.url=$XREBEL_URL"
+  fi
+  if [[ "$XREBEL_FILE" != "" ]]; then
+    CATALINA_OPTS="$CATALINA_OPTS -Dxrebel.license.file=$XREBEL_FILE"
+  fi
 fi
 
 export CATALINA_OPTS
+
+#ln -s "/usr/local/xrebel" "$HOME/.xrebel"
 
 catalina.sh $CAT_CMD

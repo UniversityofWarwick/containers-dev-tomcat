@@ -24,12 +24,13 @@ Files placed under `/app/classpath` will become part of the classpath, so this i
 
 You may want to mount a replacement `/usr/local/tomcat/conf/context.xml` if you want to define Tomcat-managed DataSources.
 
-This should run a one-shot Tomcat that deploys your Gradle-built application (If you are using rootless Docker, leave out the `--user ...` option`)
+This should run a one-shot Tomcat that deploys your Gradle-built application
 
 ```
-docker run --rm --name tomcat --user $(id -u) --network host \
+docker run --rm --name tomcat --network host \
  -v ./build/libs:/usr/local/tomcat/webapps \
  -v ./config:/app/classpath \
+ -v xrebel_config:/root/.xrebel \
  universityofwarwick/dev-tomcat:9-jdk17
 ```
 
@@ -38,5 +39,29 @@ docker run --rm --name tomcat --user $(id -u) --network host \
 * `-e ENABLE_JREBEL=1` - Enable JRebel agent.
 * `-e ENABLE_XREBEL=1` - Enable XRebel agent.
 * `-e DISABLE_DEBUG=1` - Disable debug port 8000
+* `-e XREBEL_EMAIL=your.email@warwick.ac.uk` - your email as registered with license (file or server)
+* `-e XREBEL_URL=xyz` - URL to your team license, if you have a hotseat.
+* `-e XREBEL_FILE=/path/to/xrebel.lic` - Path to a license file if you have one. You'll need to mount this inside the container.
+
+## Using JRebel
+
+Install the [IntelliJ JRebel Plugin][jrebel-install].
+
+Follow the [Setup instructions][jrebel-setup]. Skip step 1 as this is handled by this container. In step 2 you will add a remote server pointing at `http://localhost:8080` - it will warn you that this is silly, but it's actually not.
+
+You should set up your project's `.gitignore` to ignore `rebel.xml` and `rebel-remote.xml` as they will be specific to you.
+
+Deploy your app. Make a change to your code and compile it - it should reload!
+
+## Using XRebel
+
+Pass the `XREBEL_EMAIL` and `XREBEL_URL` environment variables containing your email address and your team license URL. When you first run the app and open a page, it will trigger an activation email to your inbox. Click that to activate the license. You will then need to restart the container for it to pick up the new status. Once that's done, it should be ready to use and you shouldn't need to do these steps again.
+
+This process relies on the ~/.xrebel directory being persistent between runs so make sure you are mounting it as a volume (as is done in the Usage section above)
+
+Some people have an individual license file instead - if that's you, mount the file into the container and point to it using the `XREBEL_FILE` environment variable instead of using `XREBEL_URL`.
+
 
 [rootless]: https://docs.docker.com/engine/security/rootless/#install
+[jrebel-install]: https://www.jrebel.com/products/jrebel/quickstart/intellij/
+[jrebel-setup]: https://manuals.jrebel.com/jrebel/remoteserver/intellij.html#intellijremoteserver
