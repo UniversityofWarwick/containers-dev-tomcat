@@ -8,7 +8,7 @@ This is a modified Tomcat 9 image with some minor adjustments to make it easier 
 
 ## Building
 
-`./build-image.sh` builds the image. The GitHub workflow should handle pushing new versions up. There are a few alternative tags depending on what Java version is needed.
+`./build-image.sh` builds a version of the image, based on what's in `.env` and what other build args you pass it. The default should be to generate the most modern version. The GitHub workflow should handle pushing new versions up. There are a few alternative tags to select the JDK that your app requires.
 
 The Tomcat version can be changed in the .env file, which will change both the base image and the tag for the produced image.
 

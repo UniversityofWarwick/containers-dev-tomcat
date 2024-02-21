@@ -13,6 +13,7 @@ TAGNAME="universityofwarwick/dev-tomcat:$TOMCAT_VERSION"
 docker build \
 --build-arg "TOMCAT_VERSION=$TOMCAT_VERSION" \
 -t "$TAGNAME" \
+"$@" \
 .
 
 echo "🎺 Built $TAGNAME"
