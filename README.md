@@ -27,7 +27,7 @@ You may want to mount a replacement `/usr/local/tomcat/conf/context.xml` if you 
 This should run a one-shot Tomcat that deploys your Gradle-built application
 
 ```
-docker run --rm --name tomcat --network host \
+docker run -it --rm --name tomcat --network host \
  -v ./build/libs:/usr/local/tomcat/webapps \
  -v ./config:/app/classpath \
  -v xrebel_config:/root/.xrebel \
