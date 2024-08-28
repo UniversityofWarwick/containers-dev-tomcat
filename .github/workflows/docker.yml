@@ -16,6 +16,7 @@ jobs:
       matrix:
         version:
           - 9-jdk8
+          - 9-jdk8-oracle
           - 9-jdk17
 
     steps:
@@ -41,6 +42,14 @@ jobs:
           else
             echo "Using newer logging library" >> $GITHUB_STEP_SUMMARY
             echo "LOGGING_LIB=warwick-logging-1.3.jar" >> $GITHUB_ENV
+          fi
+
+      - name: Prune Oracle library
+        run: |
+          # if matrix version doesn't contain oracle, delete tomcat/lib/ojdbc*.jar
+          if [[ "${{ matrix.version }}" != *"oracle"* ]]; then
+            echo "Removing Oracle library" >> $GITHUB_STEP_SUMMARY
+            rm -f tomcat/lib/ojdbc*.jar
           fi
 
       - name: Build and push
