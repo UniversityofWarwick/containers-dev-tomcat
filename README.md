@@ -6,6 +6,8 @@ This is a modified Tomcat 9 image with some minor adjustments to make it easier 
 * Enable JRebel and XRebel with a simple environment variable
 * Easy to add more files (like configuration) to the classpath through a mount point
 
+Images are pushed to Docker Hub at https://hub.docker.com/r/universityofwarwick/dev-tomcat/tags
+
 ## Building
 
 `./build-image.sh` builds a version of the image, based on what's in `.env` and what other build args you pass it. The default should be to generate the most modern version. The GitHub workflow should handle pushing new versions up. There are a few alternative tags to select the JDK that your app requires.
