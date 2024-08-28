@@ -44,6 +44,12 @@ jobs:
             echo "LOGGING_LIB=warwick-logging-1.3.jar" >> $GITHUB_ENV
           fi
 
+      - name: Calculate source image tag
+        run: |
+          # Remove -oracle from matrix version if it exists and put in env var
+          SOURCE_IMAGE_TAG=$(echo "${{ matrix.version }}" | sed 's/-oracle//')
+          echo "SOURCE_IMAGE_TAG=${SOURCE_IMAGE_TAG}" >> $GITHUB_ENV
+
       - name: Prune Oracle library
         run: |
           # if matrix version doesn't contain oracle, delete tomcat/lib/ojdbc*.jar
@@ -58,6 +64,6 @@ jobs:
           context: .
           push: true
           build-args: |
-            TOMCAT_VERSION=${{ matrix.version }}
+            TOMCAT_VERSION=${{ env.SOURCE_IMAGE_TAG }}
             LOGGING_LIB=${{ env.LOGGING_LIB }}
           tags: universityofwarwick/dev-tomcat:${{ matrix.version }}
