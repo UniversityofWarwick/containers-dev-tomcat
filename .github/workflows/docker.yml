@@ -35,13 +35,13 @@ jobs:
       - name: Select logging library
         run: |
           # if matrix version is jdk8, set variable to warwick-logging-1.1-all.jar
-          # else use warwick-logging-1.3.jar
+          # else use warwick-logging-1.4.jar
           if [ "${{ matrix.version }}" = "9-jdk8" ]; then
             echo "Using old logging library for Tomcat 9 with JDK 8" >> $GITHUB_STEP_SUMMARY
             echo "LOGGING_LIB=warwick-logging-1.1-all.jar" >> $GITHUB_ENV
           else
             echo "Using newer logging library" >> $GITHUB_STEP_SUMMARY
-            echo "LOGGING_LIB=warwick-logging-1.3.jar" >> $GITHUB_ENV
+            echo "LOGGING_LIB=warwick-logging-1.4-all.jar" >> $GITHUB_ENV
           fi
 
       - name: Calculate source image tag

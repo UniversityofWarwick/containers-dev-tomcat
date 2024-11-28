@@ -1,6 +1,6 @@
-ARG TOMCAT_VERSION
+ARG TOMCAT_VERSION=9-jdk17
 FROM tomcat:${TOMCAT_VERSION}
-ARG LOGGING_LIB=warwick-logging-1.3.jar
+ARG LOGGING_LIB=warwick-logging-1.4-all.jar
 
 # Common baked jars
 COPY ./tomcat/lib/* /usr/local/tomcat/lib/
