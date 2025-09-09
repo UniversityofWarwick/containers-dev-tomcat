@@ -63,6 +63,15 @@ This process relies on the ~/.xrebel directory being persistent between runs so 
 
 Some people have an individual license file instead - if that's you, mount the file into the container and point to it using the `XREBEL_FILE` environment variable instead of using `XREBEL_URL`.
 
+## HTTPS
+
+The HTTPS connector (which supports http/2) has been configured to run on port 8443 using a built-in self-signed certificate.
+
+If you want your app to use its own certificate for any reason, simply mount your own files in the following locations:
+
+ * `/usr/local/tomcat/conf/localhost-rsa-key.pem`
+ * `/usr/local/tomcat/conf/localhost-rsa-cert.pem`
+ * `/usr/local/tomcat/conf/localhost-rsa-chain.pem` (skip if you don't have a chain)
 
 [rootless]: https://docs.docker.com/engine/security/rootless/#install
 [jrebel-install]: https://www.jrebel.com/products/jrebel/quickstart/intellij/

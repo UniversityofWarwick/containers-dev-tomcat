@@ -2,6 +2,11 @@ ARG TOMCAT_VERSION=9-jdk17
 FROM tomcat:${TOMCAT_VERSION}
 ARG LOGGING_LIB=warwick-logging-1.4-all.jar
 
+RUN mkdir -p /app/classpath
+
+# Conf
+COPY ./tomcat/conf/* /usr/local/tomcat/conf/
+
 # Common baked jars
 COPY ./tomcat/lib/* /usr/local/tomcat/lib/
 COPY "./tomcat/logging-libs/${LOGGING_LIB}" /usr/local/tomcat/lib/
