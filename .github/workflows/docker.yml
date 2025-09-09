@@ -72,7 +72,11 @@ jobs:
 
       - name: Get first line of commit message
         id: commitmsg
-        run: echo "message=$(echo '${{ github.event.head_commit.message }}' | head -n 1)" >> $GITHUB_OUTPUT
+        run: |
+          FIRST_LINE="$(echo "$COMMIT_MESSAGE" | head -n 1)"
+          echo "message=$FIRST_LINE" >> "$GITHUB_OUTPUT"
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
 
       - name: Notify Slack
         uses: slackapi/slack-github-action@v2.1.1
