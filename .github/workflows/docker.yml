@@ -74,7 +74,11 @@ jobs:
         id: commitmsg
         run: |
           FIRST_LINE="$(echo "$COMMIT_MESSAGE" | head -n 1)"
-          echo "message=$FIRST_LINE" >> "$GITHUB_OUTPUT"
+          {
+            echo "message<<EOF"
+            echo "$FIRST_LINE"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
 
@@ -84,28 +88,29 @@ jobs:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
-            "channel": "#utility-libraries",
-            "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!"
-                }
-              },
-              {
-                "type": "context",
-                "elements": [
-                  {
+            {
+              "channel": "#utility-libraries",
+              "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
                     "type": "mrkdwn",
-                    "text": "`${{ github.sha }}`"
-                  },
-                  {
-                    "type": "plain_text",
-                    "text": "${{ steps.commitmsg.outputs.message }}"
+                    "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!"
                   }
-                ]
-              }
-            ]
-            
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": ${{ toJSON(format('`{0}`', github.sha)) }}
+                    },
+                    {
+                      "type": "plain_text",
+                      "text": ${{ toJSON(steps.commitmsg.outputs.message) }}
+                    }
+                  ]
+                }
+              ]
+            }
