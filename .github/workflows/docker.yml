@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
 name: Build and Publish Docker Image
 
 on:
@@ -67,3 +69,39 @@ jobs:
             TOMCAT_VERSION=${{ env.SOURCE_IMAGE_TAG }}
             LOGGING_LIB=${{ env.LOGGING_LIB }}
           tags: universityofwarwick/dev-tomcat:${{ matrix.version }}
+
+      - name: Get first line of commit message
+        id: commitmsg
+        run: echo "message=$(echo '${{ github.event.head_commit.message }}' | head -n 1)" >> $GITHUB_OUTPUT
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            "channel": "#utility-libraries",
+            "text": "A new version of *universityofwarwick/dev-tomcat* was pushed to Docker Hub!",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "A new version of *universityofwarwick/dev-tomcat* was pushed to Docker Hub!"
+                }
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "`${{ github.sha }}`"
+                  },
+                  {
+                    "type": "plain_text",
+                    "text": "${{ steps.commit.commitmsg.message }}"
+                  }
+                ]
+              }
+            ]
+            
