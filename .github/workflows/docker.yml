@@ -99,7 +99,7 @@ jobs:
                   },
                   {
                     "type": "plain_text",
-                    "text": "${{ steps.commit.commitmsg.message }}"
+                    "text": "${{ steps.commitmsg.outputs.message }}"
                   }
                 ]
               }
