@@ -81,13 +81,13 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             "channel": "#utility-libraries",
-            "text": "A new version of *universityofwarwick/dev-tomcat* was pushed to Docker Hub!",
+            "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "A new version of *universityofwarwick/dev-tomcat* was pushed to Docker Hub!"
+                  "text": "A new version of *universityofwarwick/dev-tomcat:${{ env.SOURCE_IMAGE_TAG }}* was pushed to Docker Hub!"
                 }
               },
               {
