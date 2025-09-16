@@ -63,6 +63,7 @@
                    connectionTimeout="20000"
                    redirectPort="8443"
                    maxParameterCount="1000"
+                   maxPartCount="-1"
         />
         <!-- A "Connector" using the shared thread pool-->
         <!--
@@ -99,6 +100,7 @@
         -->
         <Connector port="8443" protocol="org.apache.coyote.http11.Http11AprProtocol"
                    maxThreads="150" SSLEnabled="true"
+                   maxPartCount="-1"
                    maxParameterCount="1000"
         >
             <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
